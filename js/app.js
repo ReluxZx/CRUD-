@@ -1,5 +1,7 @@
-import datos from "../data/data.json" assert { type: "json" };
+
 import { Gift } from "./clases.js";
+import { cargaDatoos } from "./funcion.js";
+let datos=[]
 
 const cuerpoTabla = document.querySelector("#cuerpo-tabla");
 const myModal = new bootstrap.Modal(document.getElementById("modalGift"));
@@ -20,6 +22,8 @@ window.mostrarModal = (id) => {
     myModal.show();
 };
 
+
+
 const giftUpdate = (e) => {
     e.preventDefault();
     let index = datos.findIndex((item) => item.id == idGiftUpdate);
@@ -28,12 +32,13 @@ const giftUpdate = (e) => {
     datos[index].tiempo = document.querySelector("#tiempoModal").value;
     datos[index].precio = document.querySelector("#precioModal").value;
     datos[index].imagen = document.querySelector("#imagenModal").value;
-
+    localStorage.setItem("datos", JSON.stringify(datos));
     cargarTabla();
     myModal.hide();
 }
 
 const cargarTabla = async () => {
+    datos=JSON.parse(localStorage.getItem('datos'))
     cuerpoTabla.innerHTML = "";
     datos.map((item) => {
         const fila = document.createElement("tr");
@@ -42,6 +47,7 @@ const cargarTabla = async () => {
             <td>${item.tipo}</td>
             <td>${item.tiempo}</td>
             <td>$${item.precio}</td>
+            <td><img src="${item.imagen}" alt="${item.gift}" width="40" height="60"></td>
             <td>
             <div class="d-flex gap-2">
             <button class="btn btn-outline-warning" onclick="mostrarModal(${item.id})"><i class="fa fa-pencil" aria-hidden="true"></i></button>
@@ -52,11 +58,8 @@ const cargarTabla = async () => {
 
         fila.innerHTML = celdas;
         cuerpoTabla.append(fila);
+        
 
-        const img = document.createElement("img");
-        img.src = item.imagen;
-        img.alt = item.gift;
-        fila.appendChild(img);
     });
 };
 
@@ -72,6 +75,7 @@ const agregarGift = async (event) => {
 
     datos.push(new Gift(id, gift, tipo, tiempo, precio, imagen));
     document.querySelector("#formGift").reset();
+    localStorage.setItem("datos", JSON.stringify(datos));
     cargarTabla();
 };
 
@@ -84,10 +88,11 @@ window.borrarGift = (id) => {
 
     if (validar) {
         datos.splice(index, 1);
+        localStorage.setItem('datos', JSON.stringify(datos));
         cargarTabla();
     }
 };
-
+cargaDatoos();
 cargarTabla();
 
 document.querySelector("#formGift").addEventListener("submit", agregarGift);
