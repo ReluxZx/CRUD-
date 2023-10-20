@@ -18,6 +18,7 @@ window.mostrarModal = (id) => {
     document.querySelector("#tiempoModal").value = datos[index].tiempo;
     document.querySelector("#precioModal").value = datos[index].precio;
     document.querySelector("#imagenModal").value = datos[index].imagen;
+    document.querySelector("#fechaModal").value = datos[index].fecha;
 
     myModal.show();
 };
@@ -32,6 +33,7 @@ const giftUpdate = (e) => {
     datos[index].tiempo = document.querySelector("#tiempoModal").value;
     datos[index].precio = document.querySelector("#precioModal").value;
     datos[index].imagen = document.querySelector("#imagenModal").value;
+    datos[index].fecha = document.querySelector("fechaModal").value;
     localStorage.setItem("datos", JSON.stringify(datos));
     cargarTabla();
     myModal.hide();
@@ -46,7 +48,8 @@ const cargarTabla = async () => {
         const celdas = `<th>${item.gift}</th>
             <td>${item.tipo}</td>
             <td>${item.tiempo}</td>
-            <td>$${item.precio}</td>
+            <td>${item.precio}</td>
+            <td>${item.fecha}</td>
             <td><img src="${item.imagen}" alt="${item.gift}" width="40" height="60"></td>
             <td>
             <div class="d-flex gap-2">
@@ -72,8 +75,9 @@ const agregarGift = async (event) => {
     let tiempo = document.querySelector("#tiempo").value;
     let precio = document.querySelector("#precio").value;
     let imagen = document.querySelector("#imagen").value;
+    let fecha = document.querySelector("#fecha").value;
 
-    datos.push(new Gift(id, gift, tipo, tiempo, precio, imagen));
+    datos.push(new Gift(id, gift, tipo, tiempo,fecha, precio, imagen));
     document.querySelector("#formGift").reset();
     localStorage.setItem("datos", JSON.stringify(datos));
     cargarTabla();
