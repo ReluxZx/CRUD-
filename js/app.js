@@ -27,17 +27,62 @@ window.mostrarModal = (id) => {
 
 const giftUpdate = (e) => {
     e.preventDefault();
+
+    const gift = document.querySelector("#giftModal").value;
+    const tipo = document.querySelector("#tipoModal").value;
+    const tiempo = document.querySelector("#tiempoModal").value;
+    const precio = document.querySelector("#precioModal").value;
+    const imagen = document.querySelector("#imagenModal").value;
+    const fecha = document.querySelector("#fechaModal").value;
+
+    if (gift === "") {
+        alert("El campo `Gift` es obligatorio.");
+        return;
+    }
+
+    if (tipo === "") {
+        alert("El campo `Tipo` es obligatorio.");
+        return;
+    }
+
+    if (tiempo === "") {
+        alert("El campo `Tiempo` es obligatorio.");
+        return;
+    }
+
+    if (precio === "") {
+        alert("El campo `Precio` es obligatorio.");
+        return;
+    }
+
+    if (imagen === "") {
+        alert("El campo `Imagen` es obligatorio.");
+        return;
+    }
+
+    if (fecha === "") {
+        alert("El campo `Fecha` es obligatorio.");
+        return;
+    }
+
+   
+
     let index = datos.findIndex((item) => item.id == idGiftUpdate);
-    datos[index].gift = document.querySelector("#giftModal").value;
-    datos[index].tipo = document.querySelector("#tipoModal").value;
-    datos[index].tiempo = document.querySelector("#tiempoModal").value;
-    datos[index].precio = document.querySelector("#precioModal").value;
-    datos[index].imagen = document.querySelector("#imagenModal").value;
-    datos[index].fecha = document.querySelector("fechaModal").value;
+
+    datos[index].gift = gift;
+    datos[index].tipo = tipo;
+    datos[index].tiempo = tiempo;
+    datos[index].precio = precio;
+    datos[index].imagen = imagen;
+    datos[index].fecha = fecha;
+
     localStorage.setItem("datos", JSON.stringify(datos));
     cargarTabla();
     myModal.hide();
-}
+
+    console.log("El formulario se envió correctamente");
+};
+
 
 const cargarTabla = async () => {
     datos=JSON.parse(localStorage.getItem('datos'))
@@ -77,7 +122,7 @@ const agregarGift = async (event) => {
     let imagen = document.querySelector("#imagen").value;
     let fecha = document.querySelector("#fecha").value;
 
-    datos.push(new Gift(id, gift, tipo, tiempo,fecha, precio, imagen));
+    datos.push(new Gift(id, gift, tipo, tiempo, precio, imagen, fecha));
     document.querySelector("#formGift").reset();
     localStorage.setItem("datos", JSON.stringify(datos));
     cargarTabla();
