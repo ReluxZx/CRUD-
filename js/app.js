@@ -65,6 +65,8 @@ const giftUpdate = (e) => {
         return;
     }
 
+    
+
    
 
     let index = datos.findIndex((item) => item.id == idGiftUpdate);
