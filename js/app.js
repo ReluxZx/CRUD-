@@ -28,12 +28,17 @@ window.mostrarModal = (id) => {
 const giftUpdate = (e) => {
     e.preventDefault();
 
+
+
     const gift = document.querySelector("#giftModal").value;
     const tipo = document.querySelector("#tipoModal").value;
     const tiempo = document.querySelector("#tiempoModal").value;
     const precio = document.querySelector("#precioModal").value;
     const imagen = document.querySelector("#imagenModal").value;
     const fecha = document.querySelector("#fechaModal").value;
+
+    
+    localStorage.setItem("datos", JSON.stringify(datos));
 
     if (gift === "") {
         alert("El campo `Gift` es obligatorio.");
@@ -63,9 +68,9 @@ const giftUpdate = (e) => {
     if (fecha === "") {
         alert("El campo `Fecha` es obligatorio.");
         return;
-    }
+}
 
-    
+
 
    
 
